@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UA Data Nation</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="authScreen" class="screen active">
+  <div class="auth-box">
+    
+    <!-- THIS IS THE NEW LOGO -->
+    <div class="logo-container">
+      <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="45" fill="#1c1d3a" stroke="#6c5ce7" stroke-width="4"/>
+        <path d="M 30 45 A 25 25 0 0 1 70 45" fill="none" stroke="#a29bfe" stroke-width="4" stroke-linecap="round"/>
+        <path d="M 20 45 A 35 35 0 0 1 80 45" fill="none" stroke="#6c5ce7" stroke-width="4" stroke-linecap="round"/>
+        <path d="M 40 55 L 40 70 C 40 80 60 80 60 70 L 60 55" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
+        <path d="M 50 35 L 50 70" fill="none" stroke="#6c5ce7" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="35" cy="80" r="3" fill="#a29bfe"/>
+        <circle cx="50" cy="85" r="4" fill="#6c5ce7"/>
+        <circle cx="65" cy="80" r="3" fill="#a29bfe"/>
+      </svg>
+      <h1 class="logo-text">UA <span>Data Nation</span></h1>
+    </div>
+    <!-- END OF NEW LOGO -->
+
+    <p class="tagline">Data • Airtime • Exam Pins • Bills</p>
+    <div class="tabs">
+      <button class="tab active" data-tab="login">Login</button>
+      <button class="tab" data-tab="register">Register</button>
+    </div>
+    <form id="loginForm" class="form">
+      <input type="email" id="loginEmail" placeholder="Email" required>
+      <input type="password" id="loginPassword" placeholder="Password" required>
+      <button type="submit" class="btn-primary">Login</button>
+    </form>
+    <form id="registerForm" class="form hidden">
+      <input type="text" id="regName" placeholder="Full Name" required>
+      <input type="email" id="regEmail" placeholder="Email" required>
+      <input type="tel" id="regPhone" placeholder="Phone (080...)" required>
+      <input type="password" id="regPassword" placeholder="Password" required>
+      <button type="submit" class="btn-primary">Create Account</button>
+    </form>
+    <p id="authMsg" class="msg"></p>
+  </div>
+</div>
+
+<div id="dashboard" class="screen">
+  <header class="topbar">
+    <div><h2>UA Data Nation</h2><p id="userName">Hello 👋</p></div>
+    <button id="logoutBtn" class="btn-logout">Logout</button>
+  </header>
+  <div class="wallet-card">
+    <p>Wallet Balance</p>
+    <h1 id="walletBalance">₦0.00</h1>
+    <button id="fundBtn" class="btn-fund">+ Fund Wallet</button>
+  </div>
+  <div class="services-grid">
+    <div class="service-card" data-service="data">📶 <span>Buy Data</span></div>
+    <div class="service-card" data-service="airtime">📞 <span>Airtime</span></div>
+    <div class="service-card" data-service="exam">📝 <span>Exam Pin</span></div>
+    <div class="service-card" data-service="electricity">💡 <span>Electricity</span></div>
+  </div>
+  <h3 class="section-title">Recent Transactions</h3>
+  <div id="txList" class="tx-list"></div>
+</div>
+
+<div id="modal" class="modal hidden">
+  <div class="modal-content">
+    <span id="modalClose" class="close">&times;</span>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
