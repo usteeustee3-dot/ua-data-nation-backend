@@ -23,6 +23,7 @@ app.use('/api/data', require('./routes/data'));
 app.use('/api/airtime', require('./routes/airtime'));
 app.use('/api/exam', require('./routes/exam'));
 app.use('/api/electricity', require('./routes/electricity'));
+app.use('/api/admin', require('./routes/admin'));
 
 app.get('/', (req, res) => res.json({ app: 'UA Data Nation', status: 'running' }));
 

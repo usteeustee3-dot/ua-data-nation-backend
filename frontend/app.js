@@ -103,6 +103,11 @@ async function showDashboard() {
     try { currentUser = await api('/auth/me'); } catch { return $('logoutBtn').click(); }
   }
   $('userName').textContent = `Hello, ${currentUser.fullName.split(' ')[0]} 👋`;
+  if (currentUser.role === 'admin') {
+  $('adminSection').style.display = 'block';
+} else {
+  $('adminSection').style.display = 'none';
+  }
   refreshBalance(); loadTransactions();
 }
 
@@ -194,3 +199,15 @@ window.payElectricity = async () => {
 };
 
 if (token) showDashboard();
+window.openAdmin = async () => {
+  try {
+    const stats = await api('/admin/stats');
+    openModal(`
+      <h3>👑 Admin Dashboard</h3>
+      <div style="margin-bottom: 10px;"><strong>Total Users:</strong> ${stats.users}</div>
+      <div style="margin-bottom: 10px;"><strong>Total Transactions:</strong> ${stats.transactions}</div>
+      <div style="margin-bottom: 10px;"><strong>Total Wallet Balances:</strong> ₦${stats.totalBalance}</div>
+      <button onclick="$('modal').classList.add('hidden')">Close</button>
+    `);
+  } catch (err) { alert(err.message); }
+};
