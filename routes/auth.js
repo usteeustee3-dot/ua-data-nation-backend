@@ -7,7 +7,7 @@ const { sendVerificationCode } = require('../services/emailService');
 
 const signToken = (user) => jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
-// REGISTER ROUTE (Updated for Email Verification)
+// REGISTER ROUTE
 router.post('/register', async (req, res) => {
   try {
     const { fullName, email, phone, password } = req.body;
@@ -26,7 +26,11 @@ router.post('/register', async (req, res) => {
     });
 
     // Send the email
-    await sendVerificationCode(email, verificationCode);
+    try {
+      await sendVerificationCode(email, verificationCode);
+    } catch (emailErr) {
+      console.error("Email could not be sent, but user was created.");
+    }
 
     res.status(201).json({ 
       message: 'Registration successful. Check your email for the code.',
@@ -37,7 +41,7 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// VERIFY ROUTE (New)
+// VERIFY ROUTE
 router.post('/verify', async (req, res) => {
   try {
     const { email, code } = req.body;
@@ -56,7 +60,7 @@ router.post('/verify', async (req, res) => {
   }
 });
 
-// LOGIN ROUTE (Updated to block unverified users)
+// LOGIN ROUTE (Updated to send the role)
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -68,7 +72,17 @@ router.post('/login', async (req, res) => {
     const ok = await bcrypt.compare(password, user.password);
     if (!ok) return res.status(400).json({ message: 'Invalid credentials' });
 
-    res.json({ token: signToken(user), user: { id: user._id, fullName: user.fullName, email: user.email, phone: user.phone, walletBalance: user.walletBalance } });
+    res.json({ 
+      token: signToken(user), 
+      user: { 
+        id: user._id, 
+        fullName: user.fullName, 
+        email: user.email, 
+        phone: user.phone, 
+        walletBalance: user.walletBalance,
+        role: user.role // <--- THIS IS THE NEW FIX
+      } 
+    });
   } catch (err) { 
     res.status(500).json({ message: err.message }); 
   }
