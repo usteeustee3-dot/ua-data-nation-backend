@@ -26,20 +26,32 @@ document.querySelectorAll('.tab').forEach(tab => {
     const isLogin = tab.dataset.tab === 'login';
     $('loginForm').classList.toggle('hidden', !isLogin);
     $('registerForm').classList.toggle('hidden', isLogin);
-    $('verifyForm').classList.add('hidden'); // Hide verify form if switching tabs
+    $('verifyForm').classList.add('hidden');
+    $('authMsg').textContent = ""; // Clear errors when switching tabs
   };
 });
 
 $('loginForm').onsubmit = async (e) => {
   e.preventDefault();
+  $('authMsg').textContent = "Logging in...";
   try {
-    const data = await api('/auth/login', { method: 'POST', body: JSON.stringify({ email: $('loginEmail').value, password: $('loginPassword').value }) });
-    token = data.token; localStorage.setItem('ua_token', token); currentUser = data.user; showDashboard();
-  } catch (err) { $('authMsg').textContent = err.message; }
+    const data = await api('/auth/login', { 
+      method: 'POST', 
+      body: JSON.stringify({ email: $('loginEmail').value, password: $('loginPassword').value }) 
+    });
+    token = data.token; 
+    localStorage.setItem('ua_token', token); 
+    currentUser = data.user; 
+    showDashboard();
+  } catch (err) { 
+    $('authMsg').textContent = err.message; 
+  }
 };
 
 $('registerForm').onsubmit = async (e) => {
   e.preventDefault();
+  $('authMsg').textContent = "Processing... Please wait up to 60 seconds for Render to wake up.";
+  
   try {
     const data = await api('/auth/register', { 
       method: 'POST', 
@@ -50,8 +62,20 @@ $('registerForm').onsubmit = async (e) => {
     $('registerForm').classList.add('hidden');
     $('verifyForm').classList.remove('hidden');
     window.tempEmail = $('regEmail').value;
+    $('authMsg').textContent = ""; 
 
-  } catch (err) { $('authMsg').textContent = err.message; }
+  } catch (err) { 
+    if (err.message.includes('already exists')) {
+        // If user exists, force them to the verify screen anyway so they can enter the code
+        alert("Account already exists. Please enter the verification code from your email.");
+        $('registerForm').classList.add('hidden');
+        $('verifyForm').classList.remove('hidden');
+        window.tempEmail = $('regEmail').value;
+        $('authMsg').textContent = ""; 
+    } else {
+        $('authMsg').textContent = err.message; 
+    }
+  }
 };
 
 $('verifyForm').onsubmit = async (e) => {
