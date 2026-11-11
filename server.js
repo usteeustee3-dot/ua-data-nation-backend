@@ -6,6 +6,10 @@ const rateLimit = require('express-rate-limit');
 const connectDB = require('./config/db');
 
 const app = express();
+
+// CRITICAL FIX: Trust the Render proxy so the rate limiter doesn't crash
+app.set('trust proxy', 1);
+
 connectDB();
 
 app.use(helmet());
