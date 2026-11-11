@@ -26,6 +26,7 @@ document.querySelectorAll('.tab').forEach(tab => {
     const isLogin = tab.dataset.tab === 'login';
     $('loginForm').classList.toggle('hidden', !isLogin);
     $('registerForm').classList.toggle('hidden', isLogin);
+    $('verifyForm').classList.add('hidden'); // Hide verify form if switching tabs
   };
 });
 
@@ -40,9 +41,33 @@ $('loginForm').onsubmit = async (e) => {
 $('registerForm').onsubmit = async (e) => {
   e.preventDefault();
   try {
-    const data = await api('/auth/register', { method: 'POST', body: JSON.stringify({ fullName: $('regName').value, email: $('regEmail').value, phone: $('regPhone').value, password: $('regPassword').value }) });
-    token = data.token; localStorage.setItem('ua_token', token); currentUser = data.user; showDashboard();
+    const data = await api('/auth/register', { 
+      method: 'POST', 
+      body: JSON.stringify({ fullName: $('regName').value, email: $('regEmail').value, phone: $('regPhone').value, password: $('regPassword').value }) 
+    });
+    
+    alert(data.message);
+    $('registerForm').classList.add('hidden');
+    $('verifyForm').classList.remove('hidden');
+    window.tempEmail = $('regEmail').value;
+
   } catch (err) { $('authMsg').textContent = err.message; }
+};
+
+$('verifyForm').onsubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const data = await api('/auth/verify', { 
+      method: 'POST', 
+      body: JSON.stringify({ email: window.tempEmail, code: $('verifyCode').value }) 
+    });
+    
+    alert(data.message);
+    document.querySelector('[data-tab="login"]').click();
+    $('verifyForm').classList.add('hidden');
+    $('loginForm').classList.remove('hidden');
+    
+  } catch (err) { alert(err.message); }
 };
 
 $('logoutBtn').onclick = () => { localStorage.removeItem('ua_token'); location.reload(); };
