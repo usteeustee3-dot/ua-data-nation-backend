@@ -102,7 +102,6 @@ async function showDashboard() {
   $('authScreen').classList.remove('active');
   $('dashboard').classList.add('active');
   
-  // If currentUser is null (e.g., after a page refresh), fetch from backend
   if (!currentUser) {
     try { 
       currentUser = await api('/auth/me'); 
@@ -113,7 +112,7 @@ async function showDashboard() {
   
   $('userName').textContent = `Hello, ${currentUser.fullName.split(' ')[0]} 👋`;
   
-  // THIS IS THE FIX: Check for admin role and show the button
+  // Show Admin button if user is admin
   if (currentUser.role === 'admin') {
     $('adminSection').style.display = 'block';
   } else {
@@ -154,8 +153,9 @@ window.fundWallet = async () => {
   const amount = Number($('fundAmount').value);
   if (amount < 100) return alert('Minimum ₦100');
   try {
-    await api('/wallet/fund', { method: 'POST', body: JSON.stringify({ amount }) });
-    $('modal').classList.add('hidden'); alert('Wallet funded!'); refreshBalance(); loadTransactions();
+    const data = await api('/wallet/fund', { method: 'POST', body: JSON.stringify({ amount }) });
+    // Redirect to Paystack checkout page
+    window.location.href = data.url; 
   } catch (err) { alert(err.message); }
 };
 
