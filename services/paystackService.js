@@ -7,8 +7,7 @@ exports.initializePayment = async (email, amount, reference) => {
       {
         email,
         amount: amount * 100, // Paystack uses kobo
-        reference,
-        callback_url: 'https://ua-data-nation.netlify.app' // You can change this to your Netlify link later
+        reference
       },
       {
         headers: {

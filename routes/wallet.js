@@ -1,3 +1,4 @@
+
 const router = require('express').Router();
 const auth = require('../middleware/auth');
 const User = require('../models/User');
@@ -14,10 +15,13 @@ router.post('/fund', auth, async (req, res) => {
 
     await Transaction.create({ user: user._id, type: 'wallet_fund', amount, status: 'pending', reference });
     
+    // Call Paystack to get the checkout URL
     const authUrl = await paystack.initializePayment(user.email, amount, reference);
     
     res.json({ url: authUrl });
-  } catch (err) { res.status(500).json({ message: err.message }); }
+  } catch (err) { 
+    res.status(500).json({ message: err.message }); 
+  }
 });
 
 router.get('/verify-payment', auth, async (req, res) => {
@@ -40,7 +44,9 @@ router.get('/verify-payment', auth, async (req, res) => {
     } else {
       res.status(400).json({ message: 'Payment failed' });
     }
-  } catch (err) { res.status(500).json({ message: err.message }); }
+  } catch (err) { 
+    res.status(500).json({ message: err.message }); 
+  }
 });
 
 router.get('/balance', auth, async (req, res) => {
