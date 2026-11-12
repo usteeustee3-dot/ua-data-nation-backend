@@ -60,7 +60,7 @@ router.post('/verify', async (req, res) => {
   }
 });
 
-// LOGIN ROUTE (Updated to send the role)
+// LOGIN ROUTE (Sends role to frontend)
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -88,6 +88,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
+// GET CURRENT USER (For page refreshes)
 router.get('/me', auth, async (req, res) => {
   const user = await User.findById(req.user.id).select('-password');
   res.json(user);

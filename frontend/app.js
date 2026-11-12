@@ -27,7 +27,7 @@ document.querySelectorAll('.tab').forEach(tab => {
     $('loginForm').classList.toggle('hidden', !isLogin);
     $('registerForm').classList.toggle('hidden', isLogin);
     $('verifyForm').classList.add('hidden');
-    $('authMsg').textContent = ""; // Clear errors when switching tabs
+    $('authMsg').textContent = ""; 
   };
 });
 
@@ -59,17 +59,18 @@ $('registerForm').onsubmit = async (e) => {
     });
     
     alert(data.message);
-    $('registerForm').classList.add('hidden');
+    $('registerForm').style.display = 'none'; 
     $('verifyForm').classList.remove('hidden');
+    $('verifyForm').style.display = 'block';
     window.tempEmail = $('regEmail').value;
     $('authMsg').textContent = ""; 
 
   } catch (err) { 
     if (err.message.includes('already exists')) {
-        // If user exists, force them to the verify screen anyway so they can enter the code
         alert("Account already exists. Please enter the verification code from your email.");
-        $('registerForm').classList.add('hidden');
+        $('registerForm').style.display = 'none';
         $('verifyForm').classList.remove('hidden');
+        $('verifyForm').style.display = 'block';
         window.tempEmail = $('regEmail').value;
         $('authMsg').textContent = ""; 
     } else {
@@ -88,6 +89,7 @@ $('verifyForm').onsubmit = async (e) => {
     
     alert(data.message);
     document.querySelector('[data-tab="login"]').click();
+    $('verifyForm').style.display = 'none'; 
     $('verifyForm').classList.add('hidden');
     $('loginForm').classList.remove('hidden');
     
@@ -99,16 +101,27 @@ $('logoutBtn').onclick = () => { localStorage.removeItem('ua_token'); location.r
 async function showDashboard() {
   $('authScreen').classList.remove('active');
   $('dashboard').classList.add('active');
+  
+  // If currentUser is null (e.g., after a page refresh), fetch from backend
   if (!currentUser) {
-    try { currentUser = await api('/auth/me'); } catch { return $('logoutBtn').click(); }
+    try { 
+      currentUser = await api('/auth/me'); 
+    } catch { 
+      return $('logoutBtn').click(); 
+    }
   }
+  
   $('userName').textContent = `Hello, ${currentUser.fullName.split(' ')[0]} 👋`;
+  
+  // THIS IS THE FIX: Check for admin role and show the button
   if (currentUser.role === 'admin') {
-  $('adminSection').style.display = 'block';
-} else {
-  $('adminSection').style.display = 'none';
+    $('adminSection').style.display = 'block';
+  } else {
+    $('adminSection').style.display = 'none';
   }
-  refreshBalance(); loadTransactions();
+
+  refreshBalance(); 
+  loadTransactions();
 }
 
 async function refreshBalance() {
@@ -198,7 +211,6 @@ window.payElectricity = async () => {
   } catch (err) { alert(err.message); }
 };
 
-if (token) showDashboard();
 window.openAdmin = async () => {
   try {
     const stats = await api('/admin/stats');
@@ -211,3 +223,5 @@ window.openAdmin = async () => {
     `);
   } catch (err) { alert(err.message); }
 };
+
+if (token) showDashboard();

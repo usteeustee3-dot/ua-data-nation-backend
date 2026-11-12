@@ -62,20 +62,25 @@
     <div><h2>UA Data Nation</h2><p id="userName">Hello 👋</p></div>
     <button id="logoutBtn" class="btn-logout">Logout</button>
   </header>
+  
   <div class="wallet-card">
     <p>Wallet Balance</p>
     <h1 id="walletBalance">₦0.00</h1>
     <button id="fundBtn" class="btn-fund">+ Fund Wallet</button>
   </div>
+
+  <!-- ADMIN BUTTON -->
+  <div id="adminSection" style="display: none; margin-bottom: 20px;">
+    <button class="btn-primary" style="background: #e74c3c; color: white; width: 100%; padding: 12px; font-weight: bold; border: none; border-radius: 8px;" onclick="openAdmin()">👑 Admin Dashboard</button>
+  </div>
+
   <div class="services-grid">
-    <div id="adminSection" style="display: none; margin-bottom: 20px;">
-  <button class="btn-primary" style="background: #e74c3c; color: white; width: 100%; padding: 12px; font-weight: bold; border: none; border-radius: 8px;" onclick="openAdmin()">👑 Admin Dashboard</button>
-    </div>
     <div class="service-card" data-service="data">📶 <span>Buy Data</span></div>
     <div class="service-card" data-service="airtime">📞 <span>Airtime</span></div>
     <div class="service-card" data-service="exam">📝 <span>Exam Pin</span></div>
     <div class="service-card" data-service="electricity">💡 <span>Electricity</span></div>
   </div>
+
   <h3 class="section-title">Recent Transactions</h3>
   <div id="txList" class="tx-list"></div>
 </div>
