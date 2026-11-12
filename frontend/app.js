@@ -111,9 +111,9 @@ async function showDashboard() {
   }
   
   $('userName').textContent = `Hello, ${currentUser.fullName.split(' ')[0]} 👋`;
-  
+
   if (currentUser.accountNumber) {
-    $('userAccountNumber').textContent = `Account No: ${currentUser.accountNumber}`;
+    $('userAccountNumber').textContent = `${currentUser.bankName || 'UA Wallet'}: ${currentUser.accountNumber}`;
   }
 
   if (currentUser.role === 'admin') {
