@@ -112,7 +112,10 @@ async function showDashboard() {
   
   $('userName').textContent = `Hello, ${currentUser.fullName.split(' ')[0]} 👋`;
   
-  // Show Admin button if user is admin
+  if (currentUser.accountNumber) {
+    $('userAccountNumber').textContent = `Account No: ${currentUser.accountNumber}`;
+  }
+
   if (currentUser.role === 'admin') {
     $('adminSection').style.display = 'block';
   } else {
@@ -154,7 +157,6 @@ window.fundWallet = async () => {
   if (amount < 100) return alert('Minimum ₦100');
   try {
     const data = await api('/wallet/fund', { method: 'POST', body: JSON.stringify({ amount }) });
-    // Redirect to Paystack checkout page
     window.location.href = data.url; 
   } catch (err) { alert(err.message); }
 };

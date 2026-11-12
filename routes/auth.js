@@ -16,16 +16,17 @@ router.post('/register', async (req, res) => {
 
     const hashed = await bcrypt.hash(password, 10);
     const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+    const accountNumber = Math.floor(1000000000 + Math.random() * 9000000000).toString();
     
     const user = await User.create({ 
       fullName, 
       email, 
       phone, 
       password: hashed, 
-      verificationCode 
+      verificationCode,
+      accountNumber 
     });
 
-    // Send the email
     try {
       await sendVerificationCode(email, verificationCode);
     } catch (emailErr) {
@@ -60,7 +61,7 @@ router.post('/verify', async (req, res) => {
   }
 });
 
-// LOGIN ROUTE (Sends role to frontend)
+// LOGIN ROUTE
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -80,7 +81,8 @@ router.post('/login', async (req, res) => {
         email: user.email, 
         phone: user.phone, 
         walletBalance: user.walletBalance,
-        role: user.role // <--- THIS IS THE NEW FIX
+        role: user.role,
+        accountNumber: user.accountNumber
       } 
     });
   } catch (err) { 
@@ -88,7 +90,6 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// GET CURRENT USER (For page refreshes)
 router.get('/me', auth, async (req, res) => {
   const user = await User.findById(req.user.id).select('-password');
   res.json(user);
