@@ -26,8 +26,8 @@ app.use('/api/airtime', require('./routes/airtime'));
 app.use('/api/exam', require('./routes/exam'));
 app.use('/api/electricity', require('./routes/electricity'));
 app.use('/api/admin', require('./routes/admin'));
-app.use('/api/cable', require('./routes/cable'));
-app.use('/api/services', require('./routes/services')); // <-- NEW ROUTE
+app.use('/api/cable', require('./routes/cable')); 
+app.use('/api/services', require('./routes/services')); 
 
 app.get('/', (req, res) => res.json({ app: 'UA Data Nation', status: 'running' }));
 
