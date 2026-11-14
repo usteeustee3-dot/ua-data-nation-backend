@@ -8,9 +8,9 @@
 </head>
 <body>
 
+<!-- ================= LOGIN/REGISTER SCREEN ================= -->
 <div id="authScreen" class="screen active">
   <div class="auth-box">
-    
     <div class="logo-container">
       <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
         <circle cx="50" cy="50" r="45" fill="#1c1d3a" stroke="#6c5ce7" stroke-width="4"/>
@@ -22,9 +22,8 @@
         <circle cx="50" cy="85" r="4" fill="#6c5ce7"/>
         <circle cx="65" cy="80" r="3" fill="#a29bfe"/>
       </svg>
-      <h1 class="logo-text">UA <span>Data Nation</span></h1>
+      <h1 class="logo-text" style="color:#fff;">UA <span>Data Nation</span></h1>
     </div>
-
     <p class="tagline">Data • Airtime • Exam Pins • Bills</p>
     
     <div class="tabs">
@@ -46,9 +45,8 @@
       <button type="submit" class="btn-primary">Create Account</button>
     </form>
 
-    <!-- Verification Form -->
     <form id="verifyForm" class="form hidden">
-      <p style="text-align: center; font-size: 14px; margin-bottom: 10px;">Enter the 6-digit code sent to your email</p>
+      <p style="text-align: center; font-size: 14px; margin-bottom: 10px; color:#fff;">Enter the 6-digit code sent to your email</p>
       <input type="text" id="verifyCode" placeholder="123456" maxlength="6" required>
       <button type="submit" class="btn-primary">Verify Email</button>
     </form>
@@ -57,35 +55,158 @@
   </div>
 </div>
 
+<!-- ================= DASHBOARD SCREEN ================= -->
 <div id="dashboard" class="screen">
-  <header class="topbar">
-    <div><h2>UA Data Nation</h2><p id="userName">Hello 👋</p></div>
-    <button id="logoutBtn" class="btn-logout">Logout</button>
-  </header>
   
-  <div class="wallet-card">
-    <p id="userAccountNumber" style="font-size: 14px; font-weight: bold; color: #fff; margin-bottom: 5px;">Account No: 0000000000</p>
-    <p>Wallet Balance</p>
-    <h1 id="walletBalance">₦0.00</h1>
-    <button id="fundBtn" class="btn-fund">+ Fund Wallet</button>
+  <!-- Header -->
+  <header style="display: flex; justify-content: space-between; align-items: center; padding: 20px 0; margin-bottom: 10px;">
+    <div>
+      <p style="color: #666; font-size: 14px; margin-bottom: 5px;">Good Day!</p>
+      <h2 id="userName" style="font-size: 24px; font-weight: bold; color: #0f1021;">User</h2>
+    </div>
+    <div style="display: flex; gap: 15px; align-items: center;">
+      <button id="logoutBtn" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #e74c3c;">⏻</button>
+    </div>
+  </header>
+
+  <!-- Banner -->
+  <div style="background: #0b132b; border-radius: 16px; padding: 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; color: white;">
+    <div>
+      <p style="font-size: 12px; color: #3b82f6; font-weight: bold; margin-bottom: 5px;">UA DATA NATION</p>
+      <h3 style="font-size: 18px; line-height: 1.3; margin-bottom: 5px;">The best app<br>for Data & Airtime<br><span style="color: #3b82f6;">Services</span></h3>
+    </div>
+    <div style="font-size: 50px;">📱</div>
   </div>
 
-  <!-- ADMIN BUTTON -->
+  <!-- Wallet Balance -->
+  <div style="margin-bottom: 30px;">
+    <p style="color: #666; font-size: 14px; margin-bottom: 10px;">Wallet Balance</p>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <h1 id="walletBalance" style="font-size: 28px; font-weight: bold; color: #0f1021;">₦0.00</h1>
+        <span id="toggleBalance" style="font-size: 20px; color: #666; cursor: pointer;">👁️‍🗨️</span>
+        <span id="refreshBalanceBtn" style="font-size: 20px; color: #666; cursor: pointer;">🔄</span>
+      </div>
+      <button id="fundBtn" style="background: #007bff; color: white; border: none; border-radius: 25px; padding: 15px 25px; font-weight: bold; font-size: 14px; box-shadow: 0 4px 10px rgba(0,123,255,0.3);">Fund<br>Wallet</button>
+    </div>
+    <p id="userAccountNumber" style="font-size: 14px; color: #007bff; margin-top: 10px; font-weight: bold;">Account No: 0000000000</p>
+  </div>
+
+  <!-- Quick Actions -->
+  <div style="margin-bottom: 30px;">
+    <h3 style="font-size: 18px; margin-bottom: 15px; color: #0f1021;">Quick action</h3>
+    <div style="display: flex; justify-content: space-between; text-align: center;">
+      
+      <div class="service-card" data-service="data" style="display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer;">
+        <div style="width: 60px; height: 60px; border-radius: 50%; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 24px;">📶</div>
+        <span style="font-size: 12px; font-weight: bold; color: #0f1021;">Data</span>
+      </div>
+
+      <div class="service-card" data-service="airtime" style="display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer;">
+        <div style="width: 60px; height: 60px; border-radius: 50%; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 24px;">📞</div>
+        <span style="font-size: 12px; font-weight: bold; color: #0f1021;">Airtime</span>
+      </div>
+
+      <div class="service-card" data-service="electricity" style="display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer;">
+        <div style="width: 60px; height: 60px; border-radius: 50%; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 24px;">💡</div>
+        <span style="font-size: 12px; font-weight: bold; color: #0f1021;">Bills</span>
+      </div>
+
+      <div class="service-card" data-service="exam" style="display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer;">
+        <div style="width: 60px; height: 60px; border-radius: 50%; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 24px;">📝</div>
+        <span style="font-size: 12px; font-weight: bold; color: #0f1021;">Exam</span>
+      </div>
+
+      <div onclick="openServices()" style="display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer;">
+        <div style="width: 60px; height: 60px; border-radius: 50%; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 24px;">•••</div>
+        <span style="font-size: 12px; font-weight: bold; color: #0f1021;">More</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bottom Banner -->
+  <div style="background: #0b132b; border-radius: 16px; padding: 20px; position: relative; color: white; margin-bottom: 20px;">
+    <h3 style="font-size: 18px; margin-bottom: 10px;">Enjoy Top-notch<br>Services 24/7</h3>
+    <button style="background: #007bff; color: white; border: none; border-radius: 8px; padding: 8px 15px; font-size: 12px;">⚡ Get Started</button>
+    <div style="position: absolute; bottom: 0; right: 10px; font-size: 60px;">🧑🏾‍🤝‍🧑🏾</div>
+  </div>
+
+  <!-- Admin Button -->
   <div id="adminSection" style="display: none; margin-bottom: 20px;">
     <button class="btn-primary" style="background: #e74c3c; color: white; width: 100%; padding: 12px; font-weight: bold; border: none; border-radius: 8px;" onclick="openAdmin()">👑 Admin Dashboard</button>
   </div>
 
-  <div class="services-grid">
-    <div class="service-card" data-service="data">📶 <span>Buy Data</span></div>
-    <div class="service-card" data-service="airtime">📞 <span>Airtime</span></div>
-    <div class="service-card" data-service="exam">📝 <span>Exam Pin</span></div>
-    <div class="service-card" data-service="electricity">💡 <span>Electricity</span></div>
-  </div>
-
-  <h3 class="section-title">Recent Transactions</h3>
+  <h3 class="section-title" style="margin-top: 20px; color: #0f1021;">Recent Transactions</h3>
   <div id="txList" class="tx-list"></div>
 </div>
 
+<!-- ================= MY SERVICES SCREEN ================= -->
+<div id="servicesScreen" class="screen" style="background: #f8f9fa; min-height: 100vh; padding: 0;">
+  
+  <div style="background: #0066cc; padding: 20px; display: flex; align-items: center; color: white; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,102,204,0.3);">
+    <button onclick="closeServices()" style="background: none; border: none; color: white; font-size: 24px; cursor: pointer; margin-right: 15px;">&larr;</button>
+    <h2 style="font-size: 20px; font-weight: normal;">My Services</h2>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; padding: 0 20px; margin-bottom: 30px;">
+    
+    <div class="service-card" data-service="data" style="background: white; border: 2px solid #0066cc; border-radius: 12px; padding: 20px 10px; text-align: center; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+      <div style="font-size: 30px; color: #0066cc; margin-bottom: 10px;">📶</div>
+      <span style="font-size: 14px; font-weight: bold; color: #000;">Data</span>
+    </div>
+
+    <div class="service-card" data-service="airtime" style="background: white; border: 2px solid #0066cc; border-radius: 12px; padding: 20px 10px; text-align: center; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+      <div style="font-size: 30px; color: #0066cc; margin-bottom: 10px;">📱</div>
+      <span style="font-size: 14px; font-weight: bold; color: #000;">Airtime</span>
+    </div>
+
+    <div class="service-card" data-service="electricity" style="background: white; border: 2px solid #0066cc; border-radius: 12px; padding: 20px 10px; text-align: center; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+      <div style="font-size: 30px; color: #0066cc; margin-bottom: 10px;">💡</div>
+      <span style="font-size: 14px; font-weight: bold; color: #000;">Bills</span>
+    </div>
+
+    <div class="service-card" data-service="cable" style="background: white; border: 2px solid #0066cc; border-radius: 12px; padding: 20px 10px; text-align: center; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+      <div style="font-size: 30px; color: #0066cc; margin-bottom: 10px;">📺</div>
+      <span style="font-size: 14px; font-weight: bold; color: #000;">Cable</span>
+    </div>
+
+    <div class="service-card" data-service="earn" style="background: white; border: 2px solid #0066cc; border-radius: 12px; padding: 20px 10px; text-align: center; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+      <div style="font-size: 30px; color: #0066cc; margin-bottom: 10px;">👥</div>
+      <span style="font-size: 14px; font-weight: bold; color: #000;">Earn</span>
+    </div>
+
+    <div class="service-card" data-service="cash-airtime" style="background: white; border: 2px solid #0066cc; border-radius: 12px; padding: 20px 10px; text-align: center; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+      <div style="font-size: 30px; color: #0066cc; margin-bottom: 10px;">💲</div>
+      <span style="font-size: 14px; font-weight: bold; color: #000;">Cash Airtime</span>
+    </div>
+
+    <div class="service-card" data-service="exam" style="background: white; border: 2px solid #0066cc; border-radius: 12px; padding: 20px 10px; text-align: center; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+      <div style="font-size: 30px; color: #0066cc; margin-bottom: 10px;">🎓</div>
+      <span style="font-size: 14px; font-weight: bold; color: #000;">Exam</span>
+    </div>
+
+    <div class="service-card" data-service="data-card" style="background: white; border: 2px solid #0066cc; border-radius: 12px; padding: 20px 10px; text-align: center; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+      <div style="font-size: 30px; color: #0066cc; margin-bottom: 10px;">💳</div>
+      <span style="font-size: 14px; font-weight: bold; color: #000;">Data Card</span>
+    </div>
+
+    <div class="service-card" data-service="recharge-card" style="background: white; border: 2px solid #0066cc; border-radius: 12px; padding: 20px 10px; text-align: center; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+      <div style="font-size: 30px; color: #0066cc; margin-bottom: 10px;">🪪</div>
+      <span style="font-size: 14px; font-weight: bold; color: #000;">Recharge Card</span>
+    </div>
+
+  </div>
+
+  <div style="background: #1a1a1a; border-radius: 20px; padding: 20px; position: relative; color: white; margin: 0 20px;">
+    <h3 style="font-size: 16px; margin-bottom: 10px; font-weight: normal; line-height: 1.4;">Easily Convert your<br><span style="font-weight: bold; font-size: 18px;">Airtime to Cash</span></h3>
+    <button style="background: #0066cc; color: white; border: none; border-radius: 8px; padding: 8px 15px; font-size: 12px; font-weight: bold;">⚡ Try it Now</button>
+    <div style="position: absolute; bottom: 0; right: 10px; font-size: 70px;">👩🏾‍🦱</div>
+  </div>
+
+</div>
+
+<!-- ================= MODAL ================= -->
 <div id="modal" class="modal hidden">
   <div class="modal-content">
     <span id="modalClose" class="close">&times;</span>
